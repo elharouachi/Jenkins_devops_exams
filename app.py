@@ -3,5 +3,5 @@ from fastapi import FastAPI
 app = FastAPI()
 
 @app.get("/")
-def read_root():
-    return {"message": "✅ Hello depuis FastAPI + Jenkins + Docker"}
+def root():
+    return {"message": "✅ Hello depuis FastAPI avec Jenkins & Docker"}
