@@ -14,7 +14,24 @@ pipeline {
       }
     }
 
+    stage('Debug') {
+      steps {
+        script {
+          echo ">>> Current branch = ${env.BRANCH_NAME}"
+          echo ">>> Image will be: ${DOCKER_IMAGE}:${env.BRANCH_NAME}"
+        }
+      }
+    }
+
     stage('Build Docker Image') {
+      when {
+        anyOf {
+          branch 'dev'
+          branch 'qa'
+          branch 'staging'
+          branch 'master'
+        }
+      }
       steps {
         script {
           sh "docker build -t ${DOCKER_IMAGE}:${env.BRANCH_NAME} ."
@@ -23,6 +40,14 @@ pipeline {
     }
 
     stage('Push to DockerHub') {
+      when {
+        anyOf {
+          branch 'dev'
+          branch 'qa'
+          branch 'staging'
+          branch 'master'
+        }
+      }
       steps {
         script {
           sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
