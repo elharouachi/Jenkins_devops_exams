@@ -3,7 +3,7 @@ pipeline {
 
   environment {
     DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
-    DOCKER_IMAGE = "admin/monexercicejenkins"
+    DOCKER_IMAGE = "melharouachi/monexercicejenkins"
     HELM_CHART_PATH = "./charts"
   }
 
